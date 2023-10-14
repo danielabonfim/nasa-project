@@ -2,11 +2,13 @@ class Planet {
   constructor({
     koiDisposition,
     koiInsol,
-    koiPrad
+    koiPrad,
+    keplerName
   }) {
     this.koiDisposition = koiDisposition;
     this.koiInsol = koiInsol;
     this.koiPrad = koiPrad;
+    this.keplerName = keplerName;
   }
 
   isHabitable() {

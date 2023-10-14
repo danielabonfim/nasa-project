@@ -5,19 +5,18 @@ const { parse } = require('csv-parse');
 const Planet = require('./planet.model');
 
 class Planets {
-  constructor() {
+  constructor(){
     //singleton
     if (Planets._instance) {
-      return MyClass._instance
+      return Planets._instance
     }
     Planets._instance = this;
 
-    this.planets = this.getHabitablePlanets();
+    this.habitablePlanets = [];
   }
 
-  getHabitablePlanets() {
+  populateHabitablePlanets() {
     return new Promise((resolve, reject) => {
-      const habitablePlanets = [];
       fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
         .pipe(parse({
           comment: '#',
@@ -27,11 +26,12 @@ class Planets {
           const planet = new Planet({
             koiDisposition: data['koi_disposition'],
             koiInsol: data['koi_insol'],
-            koiPrad: data['koi_prad']
+            koiPrad: data['koi_prad'],
+            keplerName: data['kepler_name']
           });
 
           if (planet.isHabitable()) {
-            habitablePlanets.push(planet);
+            this.habitablePlanets.push(planet);
           }
         })
         .on('error', (err) => {
@@ -40,7 +40,7 @@ class Planets {
         })
         .on('end', () => {
           console.log('Obteve todos os planetas');
-          resolve(habitablePlanets);
+          resolve();
         })
     })
   }
