@@ -22,5 +22,8 @@
   "homepage": "https://github.com/danielabonfim/nasa-project#readme",
   "devDependencies": {
     "concurrently": "^8.2.1"
+  },
+  "dependencies": {
+    "mongoose": "^7.6.3"
   }
 }
